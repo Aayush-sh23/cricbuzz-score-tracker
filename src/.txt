@@ -1,0 +1,2 @@
+cricket scoring with live updating of score 
+u can add which type of match it is ranji , ipl ,T-20 , odi , test-Match

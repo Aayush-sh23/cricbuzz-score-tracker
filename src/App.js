@@ -1,44 +1,50 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react';
+import './App.css';
+import CricketGame from './CricketGame';
 
 const App = () => {
-  const [batsman1Score, setBatsman1Score] = useState(0);
-  const [batsman2Score, setBatsman2Score] = useState(0);
-  const [strike, setStrike] = useState(1);
-  const [teamScore, setTeamScore] = useState(0);
+  const [oversLimit, setOversLimit] = useState('');
+  const [player1, setPlayer1] = useState('');
+  const [player2, setPlayer2] = useState('');
+  const [gameStarted, setGameStarted] = useState(false);
 
-  const inc = (value) => {
-    if (strike === 1) {
-      setBatsman1Score((prevScore) => prevScore + value);
-    } else {
-      setBatsman2Score((prevScore) => prevScore + value);
-    }
-    if (value % 2 !== 0) {
-      setStrike((prevStrike) => (prevStrike === 1 ? 2 : 1));
-    }
-    setTeamScore((prevScore) => prevScore + value);
-    if (value === 0) {
-      setTeamScore((prevScore) => prevScore + 1);
+  const handleStart = () => {
+    if (oversLimit && player1 && player2) {
+      setGameStarted(true);
     }
   };
-  
+
   return (
-    <div>
-      <h1>CricBuzz</h1>
-      <p>player1 = {batsman1Score} </p>
-      <p>player2 = {batsman2Score}</p>
-
-      <button onClick={()=> inc(1)}> 1 </button>
-      <button onClick={()=> inc(2)}> 2 </button>
-      <button onClick={()=> inc(3)}> 3 </button>
-      <button onClick={()=> inc(4)}> 4 </button>
-      <button onClick={()=> inc(6)}> 6 </button>
-      <button onClick={()=> inc(1)}> wide </button>
-      <button onClick={()=> inc(1)}> No ball </button>
-
-      <h3>Team Score : {teamScore}</h3>
+    <div className="app">
+      {!gameStarted ? (
+        <div className="form">
+          <h2>Start Cricket Match</h2>
+          <input
+            type="number"
+            placeholder="Enter number of overs"
+            value={oversLimit}
+            onChange={(e) => setOversLimit(Number(e.target.value))}
+          />
+          <input
+            type="text"
+            placeholder="Enter Player 1 Name"
+            value={player1}
+            onChange={(e) => setPlayer1(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Enter Player 2 Name"
+            value={player2}
+            onChange={(e) => setPlayer2(e.target.value)}
+          />
+          <button onClick={handleStart}>Start Match</button>
+        </div>
+      ) : (
+        // <CricketGame  />
+        <CricketGame oversLimit={oversLimit} player1={player1} player2={player2} />
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
